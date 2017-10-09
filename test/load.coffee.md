@@ -1,0 +1,9 @@
+    describe 'Modules', ->
+      it 'should load clock', -> require '../clock'
+      it 'should load index', -> require '..'
+      it 'should load message', -> require '../message'
+      it 'should load menu-stats', -> require '../menu-stats'
+      it 'should load redis-source', -> require '../redis-source'
+      it 'should load redis-store', -> require '../redis-store'
+      it 'should load redis-upstream', -> require '../redis-upstream'
+      it 'should load socketio-sink', -> require '../socketio-sink'
