@@ -24,7 +24,7 @@ We might add a random delay so that not all processes run at the same time on al
 
         send = ->
           w.emit event, this_period
-          setTimeout setup, 30*1000
+          setTimeout (clock period, event, delay_range), 30*1000
           return
 
         setTimeout send, alarm.diff now
