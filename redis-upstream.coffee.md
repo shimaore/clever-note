@@ -40,7 +40,7 @@ Redis Store
           key = "Se:#{agent}"
           heal( store
             .multi()
-            .hset key, "#{day}:#{name}", stat
+            .hset key, "#{day}:#{name}", JSON.stringify stat
             .expire key, EXPIRE
             .exec()
           )
