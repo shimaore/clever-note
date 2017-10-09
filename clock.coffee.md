@@ -2,7 +2,9 @@
 
     module.exports = (w) ->
 
-      timezone = process.env.DAILY_TIMEZONE
+      timezone  = process.env.DAILY_TIMEZONE
+      timezone ?= process.env.REPORTING_TIMEZONE
+      timezone ?= 'UTC'
 
       clock = (period,event,delay_range = 0) ->
 
