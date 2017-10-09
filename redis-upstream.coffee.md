@@ -38,9 +38,10 @@ Redis Store
         {name,day,agent} = stat
         if name in desired_names
           key = "Se:#{agent}"
-          heal store
+          heal( store
             .multi()
             .hset key, "#{day}:#{name}", stat
             .expire key, EXPIRE
             .exec()
+          )
         return
