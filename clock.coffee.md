@@ -8,6 +8,10 @@
 
       clock = (period,event,delay_range = 0) ->
 
+        restart = ->
+          clock period, event, delay_range
+          return
+
         now = moment().tz timezone
 
         this_period = now.clone()
@@ -24,7 +28,7 @@ We might add a random delay so that not all processes run at the same time on al
 
         send = ->
           w.emit event, this_period
-          setTimeout (clock period, event, delay_range), 30*1000
+          setTimeout restart, 30*1000
           return
 
         setTimeout send, alarm.diff now
