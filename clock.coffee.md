@@ -1,4 +1,5 @@
     moment = require 'moment-timezone'
+    {debug} = (require 'tangible') 'clever-note:clock'
 
     module.exports = (w) ->
 
@@ -7,6 +8,7 @@
       timezone ?= 'UTC'
 
       clock = (period,event,delay_range = 0) ->
+        debug 'clock', {period,event,delay_range}
 
         restart = ->
           clock period, event, delay_range
@@ -27,6 +29,7 @@ We might add a random delay so that not all processes run at the same time on al
           .add delay, 'm'
 
         send = ->
+          debug 'send', {event,this_period}
           w.emit event, this_period
           setTimeout restart, 30*1000
           return
