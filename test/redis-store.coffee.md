@@ -8,7 +8,7 @@
 
     describe 'redis-store', ->
       it 'should getset', seem ->
-        {getset,get} = (require '../redis-store')()
+        {getset,get,store} = (require '../redis-store')()
 
         yield getset 'fo:ba', 'hello'
         (yield get 'fo:ba').should.equal 'hello'
@@ -16,3 +16,5 @@
         (yield get 'fo:ba').should.equal 'world'
         (yield getset 'fo:ba', '!').should.equal 'world'
         (yield get 'fo:ba').should.equal '!'
+
+        store.end()
