@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "coffee --no-header -c *.coffee.md",
+    "pretest": "npm install && npm run prepublish",
     "test": "mocha"
   },
   "repository": {
