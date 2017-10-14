@@ -18,7 +18,6 @@
 
         this_period = now.clone()
           .startOf period
-          .format()
 
 We might add a random delay so that not all processes run at the same time on all servers. (This avoids e.g. oversubscribing an upstream server.)
 
