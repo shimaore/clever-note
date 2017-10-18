@@ -1,5 +1,6 @@
     {heal} = (require 'tangible') 'clever-note:redis-upstream'
     seem = require 'seem'
+    os = require 'os'
 
     redis_hour = 3600
     redis_day = 24*redis_hour
@@ -25,6 +26,8 @@ Redis Store
 
       return unless process.env.REDIS_UPSTREAM?
 
+      node = process.env.REDIS_UPSTREAM_NODE ? os.hostname()
+
       store = new Redis process.env.REDIS_UPSTREAM
 
       desired_names = [
@@ -40,7 +43,7 @@ Redis Store
           key = "Se:#{agent}"
           heal( store
             .multi()
-            .hset key, "#{day}:#{name}", JSON.stringify stat
+            .hset key, "#{day}:#{name}:#{node}", JSON.stringify stat
             .expire key, EXPIRE
             .exec()
           )
