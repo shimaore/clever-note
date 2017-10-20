@@ -1,6 +1,4 @@
-    PouchDB = require 'shimaore-pouchdb-core'
-      .plugin require 'pouchdb-adapter-http'
-      .plugin require 'pouchdb-mapreduce'
+    PouchDB = require 'ccnq4-pouchdb'
 
     module.exports = pouchdb_changes = (w) ->
 
