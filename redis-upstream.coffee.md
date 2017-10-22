@@ -30,6 +30,8 @@ Redis Store
 
       store = new Redis process.env.REDIS_UPSTREAM
 
+      w.once '__end', -> store.quit()
+
       desired_names = [
         ANSWERED
         MISSED

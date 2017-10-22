@@ -17,4 +17,4 @@
         (yield getset 'fo:ba', '!').should.equal 'world'
         (yield get 'fo:ba').should.equal '!'
 
-        store.end()
+        yield store.quit()

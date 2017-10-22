@@ -9,6 +9,8 @@
 
       {store,sum,count,save,reset,clear,get,getset,delta} = (require './redis-store')()
 
+      w.once '__end', -> store.quit()
+
       save_agent_name = (agent,agent_name) ->
         save "an-#{agent}", agent_name
 
@@ -192,8 +194,4 @@ Define a new 'stats' function on the redis store.
 
 Try: `SORT #{list} ALPHA NOSORT GET *->#{fieldname}`
 
-Used for testing.
-
-      __end = -> store.end()
-
-      {save_agent_name,get_agent_name,set_menu,get_menu,call_step,menu_start,menu_stop,agent_start,agent_stop,call_stats,get_agent_stats,get_menu_stats,get_domain_stats,lex_insert,lex_scan,__end}
+      {save_agent_name,get_agent_name,set_menu,get_menu,call_step,menu_start,menu_stop,agent_start,agent_stop,call_stats,get_agent_stats,get_menu_stats,get_domain_stats,lex_insert,lex_scan}
