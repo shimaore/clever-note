@@ -171,6 +171,7 @@ Define a new 'stats' function on the redis store.
             values = yield store.mget keys...
             for key, i in keys
               cb key, values[i]
+            return
 
           stream.on 'end', ->
             resolve result
@@ -192,6 +193,25 @@ Define a new 'stats' function on the redis store.
 
         return
 
+      enumerate_and_sum = seem (pattern,field) ->
+        new Promise (resolve,reject) ->
+          stream = store.scanStream
+            match: pattern
+            count: 100
+
+          sum = 0
+
+          stream.on 'data', hand (keys) ->
+            return unless keys.length > 0
+            for key in keys
+              sum += parseInt yield store.hget key, field
+            return
+
+          stream.on 'end', ->
+            resolve sum
+
+          return
+
 Try: `SORT #{list} ALPHA NOSORT GET *->#{fieldname}`
 
-      {save_agent_name,get_agent_name,set_menu,get_menu,call_step,menu_start,menu_stop,agent_start,agent_stop,call_stats,get_agent_stats,get_menu_stats,get_domain_stats,lex_insert,lex_scan}
+      {save_agent_name,get_agent_name,set_menu,get_menu,call_step,menu_start,menu_stop,agent_start,agent_stop,call_stats,get_agent_stats,get_menu_stats,get_domain_stats,lex_insert,lex_scan,enumerate_and_sum}
