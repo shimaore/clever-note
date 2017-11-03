@@ -197,7 +197,7 @@ Define a new 'stats' function on the redis store.
         new Promise (resolve,reject) ->
           stream = store.scanStream
             match: pattern
-            count: 100
+            count: 1000
 
           sum = 0
 
