@@ -193,7 +193,7 @@ Define a new 'stats' function on the redis store.
 
         return
 
-      enumerate_and_sum = seem (pattern,field) ->
+      enumerate_and_sum = (pattern,field) ->
         new Promise (resolve,reject) ->
           stream = store.scanStream
             match: pattern
