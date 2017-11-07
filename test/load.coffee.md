@@ -9,3 +9,4 @@
       it 'should load redis-store', -> require '../redis-store'
       it 'should load redis-upstream', -> require '../redis-upstream'
       it 'should load socketio-sink', -> require '../socketio-sink'
+      it 'should load start', -> require '../start'
