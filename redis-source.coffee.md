@@ -10,6 +10,7 @@ Redis Source
     module.exports = connect_to_redis_source = seem (w) ->
 
       source = new Redis process.env.REDIS_SOURCE
+      w.once '__end', -> source.quit()
 
 Subscribe to events defined in `needy-toothpaste`.
 
