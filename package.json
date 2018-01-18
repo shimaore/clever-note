@@ -4,7 +4,7 @@
   "description": "Data streaming tools for CCNQ",
   "main": "index.js",
   "scripts": {
-    "prepublish": "coffee --no-header -c *.coffee.md",
+    "prepublishOnly": "npm install --only=dev && rm package-lock.json && coffee --no-header -c *.coffee.md",
     "pretest": "npm install && npm run prepublish",
     "test": "mocha"
   },
