@@ -16,9 +16,12 @@
 
         now = moment().tz timezone
 
+When the event is created we are _inside_ the period we want to notify for…
+
         this_period = now.clone()
           .startOf period
 
+… and we send the event at the end of that period.
 We might add a random delay so that not all processes run at the same time on all servers. (This avoids e.g. oversubscribing an upstream server.)
 
         delay = delay_range*Math.random()
@@ -29,7 +32,7 @@ We might add a random delay so that not all processes run at the same time on al
 
         send = ->
           debug 'send', {event,this_period}
-          w.emit event, this_period
+          w.emit event, this_period.clone()
           setTimeout restart, 30*1000
           return
 
