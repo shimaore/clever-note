@@ -4,8 +4,9 @@
   "description": "Data streaming tools for CCNQ",
   "main": "index.js",
   "scripts": {
-    "prepublishOnly": "npm install --only=dev && rm package-lock.json && coffee --no-header -c *.coffee.md",
-    "pretest": "npm install && npm run prepublish",
+    "build": "coffee --no-header -c *.coffee.md test/*.coffee.md",
+    "prepublishOnly": "npm install --only=dev && rm package-lock.json && npm run build",
+    "pretest": "npm install && npm run build",
     "test": "mocha"
   },
   "repository": {
@@ -16,16 +17,15 @@
   "license": "Unlicense",
   "dependencies": {
     "ccnq4-pouchdb": "^1.0.0",
-    "ioredis": "^3.1.4",
-    "moment-timezone": "^0.5.13",
+    "ioredis": "^3.2.2",
+    "moment-timezone": "^0.5.14",
     "seem": "^2.0.0",
     "socket.io-emitter": "^3.1.1",
     "tangible": "^1.9.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "coffee-coverage": "^2.0.1",
     "coffee-script": "^1.12.7",
-    "mocha": "^4.0.1"
+    "mocha": "^5.0.0"
   }
 }
