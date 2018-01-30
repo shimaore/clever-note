@@ -52,10 +52,12 @@ Storage for later stats
 
         key = "#{name}-#{reference}"
         value = yield delta key, now
-        if value?
-          value //= 1000
 
         heal clear key
+
+        return if not value?
+
+        value //= 1000
 
         call_stats report, name, value
 
@@ -73,10 +75,11 @@ Storage for later stats
 
         key = "#{name}-#{agent}"
         value = yield delta key, now
-        if value?
-          value //= 1000
 
         heal clear key
+
+        if value?
+          value //= 1000
 
         call_stats report, name, value
 
