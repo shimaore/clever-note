@@ -1,5 +1,4 @@
     {heal} = (require 'tangible') 'clever-note:redis-upstream'
-    seem = require 'seem'
     os = require 'os'
 
     redis_hour = 3600

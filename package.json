@@ -16,14 +16,15 @@
   "author": "Stéphane Alnet <stephane@shimaore.net> (https://stephane.shimaore.net/)",
   "license": "Unlicense",
   "dependencies": {
-    "ccnq4-pouchdb": "^1.0.0",
+    "axon": "^2.0.3",
+    "ccnq4-pouchdb": "^1.1.2",
     "ioredis": "^3.2.2",
-    "moment-timezone": "^0.5.14",
+    "moment-timezone": "^0.5.21",
     "tangible": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "coffeescript": "^2.0.0",
+    "coffeescript": "^2.3.1",
     "mocha": "^5.0.0"
   }
 }

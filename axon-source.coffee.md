@@ -5,7 +5,7 @@
 Axon Source
 -----------
 
-    module.exports = connect_to_redis_source = seem (w) ->
+    module.exports = connect_to_redis_source = (w) ->
 
 Make sure you add this service in `cfg.axon.publish_to` on the FreeSwitch+Node.js side.
 

@@ -1,5 +1,3 @@
-    seem = require 'seem'
-
     redis_hour = 3600
     TWO_DAYS = 2*24*redis_hour
     ONE_CALL = 8*redis_hour
@@ -15,8 +13,8 @@ Redis Store
 
 Sum values (integers, 64 bits signed)
 
-      sum = seem (key,value,timeout = TWO_DAYS) ->
-        parseInt (yield store
+      sum = (key,value,timeout = TWO_DAYS) ->
+        parseInt (await store
           .multi()
           .incrby key, value
           .expire key, timeout
@@ -24,8 +22,8 @@ Sum values (integers, 64 bits signed)
 
 Count values, up to one day or the specified interval
 
-      count = seem (key,timeout = TWO_DAYS) ->
-        parseInt (yield store
+      count = (key,timeout = TWO_DAYS) ->
+        parseInt (await store
           .multi()
           .incr key
           .expire key, timeout
@@ -53,8 +51,8 @@ Get a value
 
 Get a value and set a new one
 
-      getset = seem (key,value,timeout = TWO_DAYS) ->
-        (yield store
+      getset = (key,value,timeout = TWO_DAYS) ->
+        (await store
           .multi()
           .getset key, value
           .expire key, timeout
@@ -62,8 +60,8 @@ Get a value and set a new one
 
 Compute the difference between the value previously stored and the new value, or null if no value was previously stored.
 
-      delta = seem (key,value,timeout) ->
-        previous = yield getset key, value, timeout
+      delta = (key,value,timeout) ->
+        previous = await getset key, value, timeout
         if previous?
           value - parseInt previous
         else

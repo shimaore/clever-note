@@ -1,5 +1,3 @@
-    seem = require 'seem'
-
     debug = (require 'tangible') 'clever-note/call-events'
     {set_day,set_domain} = require './message'
 

@@ -1,5 +1,3 @@
-    seem = require 'seem'
-
     {debug,hand,heal} = (require 'tangible') 'clever-note:menu-stats'
 
     redis_hour = 3600
@@ -14,23 +12,23 @@
       save_agent_name = (agent,agent_name) ->
         save "an-#{agent}", agent_name
 
-      get_agent_name = seem (agent) ->
-        (yield get "an-#{agent}") ? agent
+      get_agent_name = (agent) ->
+        (await get "an-#{agent}") ? agent
 
       set_menu = ({menu,reference}) ->
         getset "rm-#{reference}", menu
 
-      get_menu = seem ({menu,reference}) ->
+      get_menu = ({menu,reference}) ->
         return Promise.resolve menu if menu?
-        yield get "rm-#{reference}"
+        await get "rm-#{reference}"
 
 Call progress reporting
 -----------------------
 
-      call_step = seem ({reference,now},text) ->
+      call_step = ({reference,now},text) ->
         time_key = "rT-#{reference}"
 
-        ms = yield delta time_key, now
+        ms = await delta time_key, now
 
         if ms? and (s = ms // 1000) > 0
           w.emit 'call-step', reference, text, s
@@ -47,11 +45,11 @@ Storage for later stats
         key = "#{name}-#{reference}"
         heal delta key, now
 
-      menu_stop = seem (report,name) ->
+      menu_stop = (report,name) ->
         {day,domain,reference,now} = report
 
         key = "#{name}-#{reference}"
-        value = yield delta key, now
+        value = await delta key, now
 
         heal clear key
 
@@ -69,12 +67,12 @@ Storage for later stats
         key = "#{name}-#{agent}"
         heal delta key, now
 
-      agent_stop = seem (report,name) ->
+      agent_stop = (report,name) ->
         {agent,now} = report
         agent ?= ''
 
         key = "#{name}-#{agent}"
-        value = yield delta key, now
+        value = await delta key, now
 
         heal clear key
 
@@ -83,27 +81,27 @@ Storage for later stats
 
         call_stats report, name, value
 
-      call_stats = seem (report,name,value) ->
+      call_stats = (report,name,value) ->
         {day,domain,agent} = report
         agent ?= ''
-        menu = yield get_menu report
+        menu = await get_menu report
         menu ?= ''
 
 Detail per menu/group and agent
 
-        w.emit 'stats:menu+agent', {name,day,domain,menu,agent,value,stats: yield stats "S.#{name}:#{day}:#{domain}:#{menu}:#{agent}", value}
+        w.emit 'stats:menu+agent', {name,day,domain,menu,agent,value,stats: await stats "S.#{name}:#{day}:#{domain}:#{menu}:#{agent}", value}
 
 Summary per agent
 
-        w.emit 'stats:agent', {name,day,domain,agent,value,stats: yield stats "S.#{name}:#{day}:#{domain}:*:#{agent}", value}
+        w.emit 'stats:agent', {name,day,domain,agent,value,stats: await stats "S.#{name}:#{day}:#{domain}:*:#{agent}", value}
 
 Summary per menu/group
 
-        w.emit 'stats:menu', {name,day,domain,menu,value,stats: yield stats "S.#{name}:#{day}:#{domain}:#{menu}", value}
+        w.emit 'stats:menu', {name,day,domain,menu,value,stats: await stats "S.#{name}:#{day}:#{domain}:#{menu}", value}
 
 Summary per domain
 
-        w.emit 'stats:domain', {name,day,domain,value,stats: yield stats "S.#{name}:#{day}:#{domain}", value}
+        w.emit 'stats:domain', {name,day,domain,value,stats: await stats "S.#{name}:#{day}:#{domain}", value}
 
         return
 
@@ -151,9 +149,9 @@ Define a new 'stats' function on the redis store.
 
       store.defineCommand 'stats', numberOfKeys: 1, lua: lua_stats_code
 
-      stats = seem (key,value) ->
+      stats = (key,value) ->
 
-        data = yield store.stats key, value ? 0
+        data = await store.stats key, value ? 0
 
         key: data[0]
         count: data[1]
@@ -171,7 +169,7 @@ Define a new 'stats' function on the redis store.
 
           stream.on 'data', hand (keys) ->
             return unless keys.length > 0
-            values = yield store.mget keys...
+            values = await store.mget keys...
             for key, i in keys
               cb key, values[i]
             return
@@ -181,17 +179,17 @@ Define a new 'stats' function on the redis store.
 
           stream.on 'error', reject
 
-      lex_insert = seem (key,value) ->
-        yield store.zadd key, 0, value
-        yield store.expire key, TWO_DAYS
+      lex_insert = (key,value) ->
+        await store.zadd key, 0, value
+        await store.expire key, TWO_DAYS
 
-      lex_scan = seem (key,cb) ->
+      lex_scan = (key,cb) ->
         last = ''
         while true
-          res = yield store.zrangebylex key, "(#{last}", '[zzzz', 'limit', 0, 100
+          res = await store.zrangebylex key, "(#{last}", '[zzzz', 'limit', 0, 100
           return unless res.length > 0
           for value in res
-            yield cb value
+            await cb value
           last = res[res.length-1]
 
         return
@@ -207,7 +205,7 @@ Define a new 'stats' function on the redis store.
           stream.on 'data', hand (keys) ->
             return unless keys.length > 0
             for key in keys
-              sum += parseInt yield store.hget key, field
+              sum += parseInt await store.hget key, field
             return
 
           stream.on 'end', ->

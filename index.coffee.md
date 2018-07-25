@@ -1,4 +1,3 @@
-    seem = require 'seem'
     debug = (require 'tangible') 'clever-note'
     EventEmitter = require 'events'
 
