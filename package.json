@@ -1,6 +1,6 @@
 {
   "name": "clever-note",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Data streaming tools for CCNQ",
   "main": "index.js",
   "scripts": {
