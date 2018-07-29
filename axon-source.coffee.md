@@ -5,11 +5,11 @@
 Axon Source
 -----------
 
-    module.exports = connect_to_redis_source = (w) ->
+    module.exports = axon_source = (w) ->
 
 Make sure you add this service in `cfg.axon.publish_to` on the FreeSwitch+Node.js side.
 
-      source = Axon.socket 'pub'
+      source = Axon.socket 'sub'
       source.bind process.env.AXON_SOURCE
       w.once '__end', -> source.close()
 
