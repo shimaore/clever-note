@@ -1,4 +1,4 @@
-    {debug,hand,heal} = (require 'tangible') 'clever-note:menu-stats'
+    {debug,foot,heal} = (require 'tangible') 'clever-note:menu-stats'
 
     redis_hour = 3600
     TWO_DAYS = 2*24*redis_hour
@@ -167,7 +167,7 @@ Define a new 'stats' function on the redis store.
 
           result = {}
 
-          stream.on 'data', hand (keys) ->
+          stream.on 'data', foot (keys) ->
             return unless keys.length > 0
             values = await store.mget keys...
             for key, i in keys
@@ -202,7 +202,7 @@ Define a new 'stats' function on the redis store.
 
           sum = 0
 
-          stream.on 'data', hand (keys) ->
+          stream.on 'data', foot (keys) ->
             return unless keys.length > 0
             for key in keys
               sum += parseInt await store.hget key, field
