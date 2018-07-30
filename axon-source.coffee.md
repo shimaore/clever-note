@@ -14,6 +14,6 @@ Make sure you add this service in `cfg.axon.publish_to` on the FreeSwitch+Node.j
       w.once '__end', -> source.close()
 
       source.on 'message', (message) ->
-        w.emit 'report', message
+        w.emit 'report', message.value
 
       source
