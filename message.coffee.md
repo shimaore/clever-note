@@ -21,10 +21,6 @@ Message expansion
       return if report.domain?
 
       if report.number_domain?
-        if $ = report.number_domain.match /^number_domain:(.+)$/
-          report.domain = $[1]
-        else
-          report.domain = report.number_domain
-        return
+        report.domain = report.number_domain
 
     module.exports = {set_day,set_domain}
