@@ -6,7 +6,7 @@ Incoming events
 
     module.exports = (w) ->
 
-Simple report (via `@notify` in `huge-play/middleware/setup`).
+Simple report (via `@notify` on number-domain in `huge-play/middleware/setup`).
 
       w.on 'report', (report) ->
 

@@ -15,9 +15,10 @@ Make sure you add this service in `cfg.axon.publish_to` on the FreeSwitch+Node.j
 
       source.on 'message', (message) ->
         report = Object.assign {_key:message.key,_id:message.id}, message.value
-        type = message.key.split(':')[0]
-        switch message.value.report_type
+        switch message.value?.report_type
+
           when 'call'
+            type = message.key.split(':')[0]
             switch type
               when 'number_domain'
                 w.emit 'report', report
@@ -25,11 +26,13 @@ Make sure you add this service in `cfg.axon.publish_to` on the FreeSwitch+Node.j
                 w.emit 'report:agent', report
               when 'endpoint'
                 no
+
           when 'queuer'
+            type = message.id.split(':')[0]
             switch type
-              when 'agent' # agent notification
+              when 'agent'
                 w.emit 'queuer', report
-              when 'number_domain' # call notification
+              when 'call'
                 w.emit 'queuer:call', report
 
       source
