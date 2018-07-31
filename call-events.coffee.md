@@ -34,6 +34,20 @@ Queuer report (via `agent.notify` in `huge-play/middleware/client/queuer`).
         if report.old_state?
           w.emit "leave:#{report.old_state}", report
 
+Queuer report (via `call.notify` in `huge-play/middleware/client/queuer`).
+
+      w.on 'queuer:call', (report) ->
+
+        set_day report
+        set_domain report
+
+        if report.state?
+          w.emit "state:call-#{report.state}", report
+        if report.event?
+          w.emit "event:call-#{report.event}", report
+        if report.old_state?
+          w.emit "leave:call-#{report.old_state}", report
+
 Call start and end
 ------------------
 
