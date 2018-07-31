@@ -17,6 +17,8 @@ Simple report (via `@notify` in `huge-play/middleware/setup`).
           w.emit "state:#{report.state}", report
         if report.event?
           w.emit "event:#{report.event}", report
+        if report.old_state?
+          w.emit "leave:#{report.old_state}", report
 
 Queuer report (via `agent.notify` in `huge-play/middleware/client/queuer`).
 
