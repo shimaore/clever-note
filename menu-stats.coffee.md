@@ -5,7 +5,7 @@
 
     module.exports = (w) ->
 
-      {store,sum,count,save,reset,get,getset,delta} = (require './redis-store')()
+      {store,sum,count,save,reset,get,getset,delta,delta_clear} = (require './redis-store')()
 
       w.once '__end', -> store.quit()
 
