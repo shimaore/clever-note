@@ -58,6 +58,13 @@ Get a value and set a new one
           .expire key, timeout
           .exec())[0][1]
 
+      getclear = (key,value) ->
+        (await store
+          .multi()
+          .get key
+          .del key
+          .exec())[0][1]
+
 Compute the difference between the value previously stored and the new value, or null if no value was previously stored.
 
       delta = (key,value,timeout) ->
@@ -67,4 +74,11 @@ Compute the difference between the value previously stored and the new value, or
         else
           null
 
-      {store,sum,count,save,reset,clear,get,getset,delta}
+      delta_clear = (key,value,timeout) ->
+        previous = await getclear key, timeout
+        if previous?
+          value - parseInt previous
+        else
+          null
+
+      {store,sum,count,save,reset,clear,get,getset,getclear,delta,delta_clear}

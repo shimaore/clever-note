@@ -1,5 +1,4 @@
-    seem = require 'seem'
-    (require 'chai').should()
+    ({expect} = require 'chai').should()
     EventEmitter = require 'events'
 
     sleep = (timeout) ->
@@ -7,14 +6,24 @@
         setTimeout resolve, timeout
 
     describe 'redis-store', ->
-      it 'should getset', seem ->
+      it 'should getset', ->
         {getset,get,store} = (require '../redis-store')()
 
-        yield getset 'fo:ba', 'hello'
-        (yield get 'fo:ba').should.equal 'hello'
-        (yield getset 'fo:ba', 'world').should.equal 'hello'
-        (yield get 'fo:ba').should.equal 'world'
-        (yield getset 'fo:ba', '!').should.equal 'world'
-        (yield get 'fo:ba').should.equal '!'
+        await getset 'fo:ba', 'hello'
+        (await get 'fo:ba').should.equal 'hello'
+        (await getset 'fo:ba', 'world').should.equal 'hello'
+        (await get 'fo:ba').should.equal 'world'
+        (await getset 'fo:ba', '!').should.equal 'world'
+        (await get 'fo:ba').should.equal '!'
+        await store.quit()
 
-        yield store.quit()
+      it 'should getclear', ->
+        {getclear,getset,store} = (require '../redis-store')()
+
+        await getset 'ba:fo', 'hello'
+        (await getclear 'ba:fo').should.equal 'hello'
+        expect(await getset 'ba:fo', 'world').to.be.null
+        (await getclear 'ba:fo').should.equal 'world'
+        await store.quit()
+
+      after ->

@@ -5,7 +5,7 @@
 
     module.exports = (w) ->
 
-      {store,sum,count,save,reset,clear,get,getset,delta} = (require './redis-store')()
+      {store,sum,count,save,reset,get,getset,delta} = (require './redis-store')()
 
       w.once '__end', -> store.quit()
 
@@ -49,9 +49,7 @@ Storage for later stats
         {day,domain,reference,now} = report
 
         key = "#{name}-#{reference}"
-        value = await delta key, now
-
-        heal clear key
+        value = await delta_clear key, now
 
         return if not value?
 
@@ -72,9 +70,7 @@ Storage for later stats
         agent ?= ''
 
         key = "#{name}-#{agent}"
-        value = await delta key, now
-
-        heal clear key
+        value = await delta_clear key, now
 
         if value?
           value //= 1000
