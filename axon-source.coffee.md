@@ -1,6 +1,6 @@
     debug = (require 'tangible') 'clever-note:axon-source'
 
-    Axon = require 'axon'
+    Axon = require '@shimaore/axon'
 
 Axon Source
 -----------
