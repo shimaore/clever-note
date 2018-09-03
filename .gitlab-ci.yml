@@ -1,0 +1,8 @@
+image: node:alpine
+test:
+  services:
+  - redis
+  script:
+  - npm install
+  - npm audit
+  - npm test
