@@ -31,9 +31,9 @@ Call progress reporting
         ms = await delta time_key, now
 
         if ms? and (s = ms // 1000) > 0
-          w.emit 'call-step', reference, text, s
+          w.emit 'call-step', reference, text, s,    now
         else
-          w.emit 'call-step', reference, text
+          w.emit 'call-step', reference, text, null, now
 
 Storage for later stats
 -----------------------
