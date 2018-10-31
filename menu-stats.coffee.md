@@ -13,7 +13,7 @@
         save "an-#{agent}", agent_name
 
       get_agent_name = (agent) ->
-        (await get "an-#{agent}") ? agent
+        get "an-#{agent}"
 
       set_menu = ({menu,reference}) ->
         getset "rm-#{reference}", menu
