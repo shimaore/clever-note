@@ -51,6 +51,8 @@ Storage for later stats
         key = "#{name}-#{reference}"
         value = await delta_clear key, now
 
+Avoid double-counts
+
         return if not value?
 
         value //= 1000
