@@ -20,7 +20,7 @@ Make sure you add this service in `cfg.axon.publish_to` on the FreeSwitch+Node.j
           when 'call'
             type = message.key.split(':')[0]
             switch type
-              when 'number_domain'
+              when 'number_domain', 'reference'
                 w.emit 'report', report
               when 'agent'
                 w.emit 'report:agent', report
