@@ -28,4 +28,21 @@
         expect(await get 'ba:fo').to.be.null
         await store.quit()
 
+      it 'should delta', ->
+        {delta,delta_clear,get,store} = (require '../redis-store')()
+
+        await delta 'pandas', 42
+        (await delta_clear 'pandas', 52).should.equal 10
+        expect(await get 'pandas').to.be.null
+        await store.quit()
+
+      it 'should handle multiple delta/delta_clear', ->
+        {delta,delta_clear,get,store} = (require '../redis-store')()
+
+        expect(await delta 'pandas', 42).to.be.null
+        (await delta 'pandas', 45).should.equal 3
+        (await delta_clear 'pandas', 52).should.equal 7
+        expect(await delta_clear 'pandas', 53).to.be.null
+        await store.quit()
+
       after ->

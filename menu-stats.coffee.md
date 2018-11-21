@@ -1,4 +1,4 @@
-    {debug,foot,heal} = (require 'tangible') 'clever-note:menu-stats'
+    {debug,foot} = (require 'tangible') 'clever-note:menu-stats'
 
     redis_hour = 3600
     TWO_DAYS = 2*24*redis_hour
@@ -43,7 +43,8 @@ Storage for later stats
       menu_start = (report,name) ->
         {reference,now} = report
         key = "#{name}-#{reference}"
-        heal delta key, now
+        await delta key, now
+        return
 
       menu_stop = (report,name) ->
         {day,domain,reference,now} = report
@@ -57,7 +58,8 @@ Avoid double-counts
 
         value //= 1000
 
-        call_stats report, name, value
+        await call_stats report, name, value
+        return
 
 ### Agent
 
@@ -65,7 +67,8 @@ Avoid double-counts
         {agent,now} = report
         agent ?= ''
         key = "#{name}-#{agent}"
-        heal delta key, now
+        await delta key, now
+        return
 
       agent_stop = (report,name) ->
         {agent,now} = report
@@ -77,7 +80,8 @@ Avoid double-counts
         if value?
           value //= 1000
 
-        call_stats report, name, value
+        await call_stats report, name, value
+        return
 
       call_stats = (report,name,value) ->
         {day,domain,agent} = report
