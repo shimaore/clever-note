@@ -16,11 +16,11 @@
   "author": "Stéphane Alnet <stephane@shimaore.net> (https://stephane.shimaore.net/)",
   "license": "Unlicense",
   "dependencies": {
-    "@shimaore/axon": "^3.4.4",
+    "@shimaore/axon": "^3.4.5",
     "ccnq4-pouchdb": "^1.1.2",
-    "ioredis": "^4.0.0",
-    "moment-timezone": "^0.5.21",
-    "tangible": "^2.0.0"
+    "ioredis": "^4.2.0",
+    "moment-timezone": "^0.5.23",
+    "tangible": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
