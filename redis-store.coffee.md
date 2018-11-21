@@ -4,6 +4,8 @@
 
     Redis = require 'ioredis'
 
+    decimal = (x) -> parseInt x, 10
+
 Redis Store
 -----------
 
@@ -14,7 +16,7 @@ Redis Store
 Sum values (integers, 64 bits signed)
 
       sum = (key,value,timeout = TWO_DAYS) ->
-        parseInt (await store
+        decimal (await store
           .multi()
           .incrby key, value
           .expire key, timeout
@@ -23,7 +25,7 @@ Sum values (integers, 64 bits signed)
 Count values, up to one day or the specified interval
 
       count = (key,timeout = TWO_DAYS) ->
-        parseInt (await store
+        decimal (await store
           .multi()
           .incr key
           .expire key, timeout
@@ -70,14 +72,14 @@ Compute the difference between the value previously stored and the new value, or
       delta = (key,value,timeout) ->
         previous = await getset key, value, timeout
         if previous?
-          value - parseInt previous
+          value - decimal previous
         else
           null
 
       delta_clear = (key,value,timeout) ->
         previous = await getclear key, timeout
         if previous?
-          value - parseInt previous
+          value - decimal previous
         else
           null
 
