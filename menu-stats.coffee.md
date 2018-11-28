@@ -89,6 +89,8 @@ Avoid double-counts
         menu = await get_menu report
         menu ?= ''
 
+        debug "#{report.reference} call_stats #{value} #{name}:#{day}:#{domain}:#{menu}:#{agent}"
+
 Detail per menu/group and agent
 
         w.emit 'stats:menu+agent', {name,day,domain,menu,agent,value,stats: await stats "S.#{name}:#{day}:#{domain}:#{menu}:#{agent}", value}
