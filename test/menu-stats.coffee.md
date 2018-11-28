@@ -9,13 +9,13 @@
       it 'should menu_stop / menu_start', ->
         {get,store} = (require '../redis-store')()
         w = new EventEmitter
-        {set_menu,menu_start,menu_stop} = (require '../menu-stats') w
+        {menu_start,menu_stop} = (require '../menu-stats') w
 
         our_menu = "hello-#{Math.random()}"
-        await set_menu reference:'cat', menu:our_menu
 
         report =
           reference: 'cat'
+          menu: our_menu
           now: 42000
 
         await menu_start report, 'count'
@@ -23,6 +23,7 @@
 
         report =
           reference: 'cat'
+          menu: our_menu
           now: 45000
         await menu_start report, 'count'
         (await get 'count-cat').should.equal '45000'

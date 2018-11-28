@@ -15,9 +15,6 @@
       get_agent_name = (agent) ->
         get "an-#{agent}"
 
-      set_menu = ({menu,reference}) ->
-        getset "rm-#{reference}", menu
-
       get_menu = ({menu,reference}) ->
         return Promise.resolve menu if menu?
         await get "rm-#{reference}"
@@ -41,10 +38,10 @@ Storage for later stats
 ### Menu traversal
 
       menu_start = (report,name) ->
-        {reference,now} = report
+        {reference,menu,now} = report
         key = "#{name}-#{reference}"
         await delta key, now
-        return
+        await getset "rm-#{reference}", menu
 
       menu_stop = (report,name) ->
         {day,domain,reference,now} = report
@@ -219,4 +216,4 @@ Define a new 'stats' function on the redis store.
 
 Try: `SORT #{list} ALPHA NOSORT GET *->#{fieldname}`
 
-      {save_agent_name,get_agent_name,set_menu,get_menu,call_step,menu_start,menu_stop,agent_start,agent_stop,call_stats,get_agent_stats,get_menu_stats,get_domain_stats,lex_insert,lex_scan,enumerate_and_sum}
+      {save_agent_name,get_agent_name,get_menu,call_step,menu_start,menu_stop,agent_start,agent_stop,call_stats,get_agent_stats,get_menu_stats,get_domain_stats,lex_insert,lex_scan,enumerate_and_sum}
