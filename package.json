@@ -18,8 +18,8 @@
   "dependencies": {
     "@shimaore/axon": "^3.4.5",
     "ccnq4-pouchdb": "^1.1.2",
-    "ioredis": "^4.2.0",
-    "moment-timezone": "^0.5.23",
+    "ioredis": "^4.9.5",
+    "moment-timezone": "^0.5.25",
     "tangible": "^3.0.0"
   },
   "devDependencies": {
