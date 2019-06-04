@@ -15,7 +15,8 @@ Redis Store
 
 Sum values (integers, 64 bits signed)
 
-      sum = (key,value,timeout = TWO_DAYS) ->
+      sum = (key,value,timeout) ->
+        timeout ?= TWO_DAYS
         decimal (await store
           .multi()
           .incrby key, value
@@ -24,7 +25,8 @@ Sum values (integers, 64 bits signed)
 
 Count values, up to one day or the specified interval
 
-      count = (key,timeout = TWO_DAYS) ->
+      count = (key,timeout) ->
+        timeout ?= TWO_DAYS
         decimal (await store
           .multi()
           .incr key
@@ -33,7 +35,8 @@ Count values, up to one day or the specified interval
 
 Save a value, for up to one call or the specified interval
 
-      save = (key,value,timeout = ONE_CALL) ->
+      save = (key,value,timeout) ->
+        timeout ?= ONE_CALL
         store.setex key, timeout, value
 
 Reset a value, returns the previous value
@@ -53,7 +56,8 @@ Get a value
 
 Get a value and set a new one
 
-      getset = (key,value,timeout = TWO_DAYS) ->
+      getset = (key,value,timeout) ->
+        timeout ?= TWO_DAYS
         (await store
           .multi()
           .getset key, value
