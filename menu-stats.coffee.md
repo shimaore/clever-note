@@ -2,6 +2,7 @@
 
     redis_hour = 3600
     TWO_DAYS = 2*24*redis_hour
+    TWO_MONTHS = 2*31*24*redis_hour
 
     module.exports = (w) ->
 
@@ -143,10 +144,11 @@ Define a new 'stats' function on the redis store.
         end
         redis.call('hset',key,'min',min)
         redis.call('hset',key,'max',max)
+        redis.call('expire',key, TWO_MONTHS)
         local count = redis.call('hincrby',key,'count',1)
         local sum   = redis.call('hincrby',key,'sum',v)
         return {key,count,sum,max,min}
-      '''
+      '''.replace 'TWO_MONTHS', TWO_MONTHS
 
       store.defineCommand 'stats', numberOfKeys: 1, lua: lua_stats_code
 
