@@ -33,6 +33,9 @@ Call progress reporting
         else
           w.emit 'call-step', reference, text, null, now
 
+        debug "#{reference} #{now} call_step #{s} #{text}"
+        return
+
 Storage for later stats
 -----------------------
 
@@ -40,12 +43,17 @@ Storage for later stats
 
       menu_start = (report,name) ->
         {reference,menu,now} = report
+
+        debug "#{reference} #{now} menu_start #{name} #{menu}"
+
         key = "#{name}-#{reference}"
         await delta key, now
         await getset "rm-#{reference}", menu
 
       menu_stop = (report,name) ->
         {day,domain,reference,now} = report
+
+        debug "#{reference} #{now} menu_stop  #{name}"
 
         key = "#{name}-#{reference}"
         value = await delta_clear key, now
@@ -64,6 +72,9 @@ Avoid double-counts
       agent_start = (report,name) ->
         {agent,now} = report
         agent ?= ''
+
+        debug "#{report.reference} #{now} agent_start #{name} #{agent}"
+
         key = "#{name}-#{agent}"
         await delta key, now
         return
@@ -71,6 +82,8 @@ Avoid double-counts
       agent_stop = (report,name) ->
         {agent,now} = report
         agent ?= ''
+
+        debug "#{report.reference} #{now} agent_stop  #{name} #{agent}"
 
         key = "#{name}-#{agent}"
         value = await delta_clear key, now
@@ -87,7 +100,7 @@ Avoid double-counts
         menu = await get_menu report
         menu ?= ''
 
-        debug "#{report.reference} call_stats #{value} #{name}:#{day}:#{domain}:#{menu}:#{agent}"
+        debug "#{report.reference} #{report.now} call_stats #{value} #{name}:#{day}:#{domain}:#{menu}:#{agent}"
 
 Detail per menu/group and agent
 
